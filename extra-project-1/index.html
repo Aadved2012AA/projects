@@ -31,6 +31,18 @@
         background-color: rgb(255, 255, 255);
       }
       .blue {
+        animation: spin 4s linear infinite;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+      .blue {
         margin-bottom: 2px;
         margin-left: 190px;
         height: 75px;
@@ -48,14 +60,14 @@
         background-color: darkgreen;
       }
       .line1 {
-        height:0px;
+        height: 0px;
         width: 75px;
         border: 2px solid navy;
         top: 34.5px;
         position: inherit;
       }
       .line2 {
-        height:0px;
+        height: 0px;
         right: 1px;
         transform: rotate(90deg);
         width: 75px;
@@ -64,7 +76,7 @@
         position: inherit;
       }
       .line3 {
-        height:0px;
+        height: 0px;
         transform: rotate(45deg);
         width: 75px;
         border: 2px solid navy;
@@ -73,7 +85,7 @@
       }
       .line4 {
         right: 1px;
-        height:0px;
+        height: 0px;
         transform: rotate(135deg);
         width: 75px;
         border: 2px solid navy;
@@ -81,7 +93,7 @@
         position: inherit;
       }
       .line5 {
-        height:0px;
+        height: 0px;
         transform: rotate(245deg);
         width: 75px;
         border: 2px solid navy;
@@ -89,7 +101,7 @@
         position: inherit;
       }
       .line6 {
-        height:0px;
+        height: 0px;
         transform: rotate(159deg);
         width: 75px;
         border: 2px solid navy;
@@ -97,7 +109,7 @@
         position: inherit;
       }
       .line7 {
-        height:0px;
+        height: 0px;
         transform: rotate(202deg);
         width: 75px;
         border: 2px solid navy;
@@ -105,7 +117,7 @@
         position: inherit;
       }
       .line8 {
-        height:0px;
+        height: 0px;
         transform: rotate(293deg);
         width: 75px;
         border: 2px solid navy;
