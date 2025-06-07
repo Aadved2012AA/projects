@@ -1,347 +1,378 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>Calculator | Aadved</title>
-    <style>
-        html{
-    box-sizing: border-box;
-    height: 100%;
-}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dual Calculators | Aadved & ChatGPT</title>
+  <style>
+    /* Global Reset and Body Setup */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-*,
-*::after,
-*::before{
-    box-sizing: inherit;
-    margin: 0;
-    padding: 0;
-}
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: start;
+      min-height: 100vh;
+      padding: 20px;
+      background: linear-gradient(320deg, #7E78D2, #dbd4bb, #B4CEB3);
+      font-family: Arial, sans-serif;
+      gap: 30px;
+    }
 
-body{
-    align-items: center;
-    background: linear-gradient(320deg, #7E78D2,  #dbd4bb, #B4CEB3 );
-    display: flex;
-    font-family: Arial, Helvetica, sans-serif;
-    font-display: swap;
-    height: inherit;
-    justify-content: center;
-}
+    .title-tag {
+      font-size: 1.4rem;
+      margin-bottom: 10px;
+      font-weight: bold;
+      text-align: center;
+      color: #333;
+    }
 
-.wrapper{
-    backdrop-filter: blur(5.5px);
-    -webkit-backdrop-filter:  blur(5.5px);
-    border-radius: 16px;
-    box-shadow: 0 4px 30px rgba(35, 35, 35, 0.1);
-    color: #232323;
-     backdrop-filter: blur(4px);
-    -webkit-backdrop-filter:  blur(4px);
-    background: rgba(255, 255, 255, 0.30);
-    border: rgba(255, 255, 255, 0.34);
-    flex-basis: 400px;
-    height: 540px;
-    padding: 20px 35px;
-}
+    .calc-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 40px;
+      width: 100%;
+    }
 
-.screen{
-    backdrop-filter: blur(5.5px);
-    backdrop-filter: blur(5.5px);
-    -webkit-backdrop-filter:  blur(5.5px);
-    background: rgba(255, 255, 255, 0.75);
-    border: rgba(255, 255, 255, 0.1);
-    border-radius: 16px;
-    box-shadow: 0 4px 30px rgba(35, 35, 35, 0.01);
-    color: #232323;
-    font-size: 35px;
-    overflow: auto;
-    text-align: right;
-    width: 326px;
-    padding:20px;
-}
+    /* Aadved's Calculator */
+    .wrapper {
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      background: rgba(255, 255, 255, 0.30);
+      border-radius: 16px;
+      padding: 20px 35px;
+      box-shadow: 0 4px 30px rgba(35, 35, 35, 0.1);
+      flex-basis: 340px;
+    }
 
+    #user-screen {
+      background: rgba(255, 255, 255, 0.75);
+      border-radius: 16px;
+      color: #232323;
+      font-size: 35px;
+      text-align: right;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
 
-.calc-button-row{
-    display: flex;
-    justify-content: space-between;
-    margin: 5% 0;
-}
+    .calc-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
 
-.calc-button{
-    backdrop-filter: blur(5.5px);
-    backdrop-filter: blur(5.5px);
-    -webkit-backdrop-filter:  blur(5.5px);
-    background: rgba(255, 255, 255, 0.75);
-    border: rgba(255, 255, 255, 0.1);
-    border-radius: 16px;
-    box-shadow: 0 4px 30px rgba(35, 35, 35, 0.01);
-    color: #232323;
-    flex-basis: 20%;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    font-size: 24px;
-    height: 65px;
-}
+    .calc-button-row {
+      display: flex;
+      justify-content: space-between;
+    }
 
-.calc-button:last-child{
-    backdrop-filter: blur(5.5px);
-    backdrop-filter: blur(5.5px);
-    -webkit-backdrop-filter:  blur(5.5px);
-    background: rgba(255, 255, 255, 0.75);
-    border: rgba(255, 255, 255, 0.1);
-    border-radius: 16px;
-    box-shadow: 0 4px 30px rgba(35, 35, 35, 0.01);
-    color: #fff;
-    background-color:   #4faccb;
-}
+    .calc-button {
+      background: rgba(255, 255, 255, 0.75);
+      border: none;
+      border-radius: 16px;
+      font-size: 24px;
+      flex: 1;
+      height: 60px;
+      margin: 4px;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
 
-.calc-button:last-child:hover{
-    background-color: inherit;
-    color: inherit;
-}
+    .calc-button:last-child {
+      background-color: #4faccb;
+      color: white;
+    }
 
-.calc-button:hover{
-    background-color: inherit;
-}
+    .calc-button:active {
+      background-color: #4faccb;
+      color: white;
+    }
 
-.calc-button:active{
-    background-color: #4faccb;
-    color: white;
-}
+    .double {
+      flex: 2;
+    }
 
-.calc-button:last-child:active{
-    background-color: rgb(255, 248, 33);
-    color: black;
-}
+    .triple {
+      flex: 3;
+    }
 
-.double{
-    flex-basis: 47%;
-}
+    /* ChatGPT's Calculator */
+    .gpt-wrapper {
+      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      color: #fff;
+      border-radius: 16px;
+      padding: 25px 30px;
+      box-shadow: 0 0 30px rgba(0,255,255,0.3);
+      width: 340px;
+      height: auto;
+      display: flex;
+      flex-direction: column;
+    }
 
-.triple{
-flex-basis: 73%;
-}
+    #ai-screen {
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid #00ffff;
+      color: #00ffff;
+      font-size: 36px;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: right;
+      margin-bottom: 20px;
+      overflow-x: auto;
+    }
 
-    </style>
+    #gpt-calc .calc-button {
+      flex: 1;
+      margin: 5px;
+      font-size: 20px;
+      height: 55px;
+      background: #1a1a2e;
+      color: #00ffff;
+      border: 2px solid #00ffff;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    #gpt-calc .calc-button:active {
+      background-color: #00ffff;
+      color: #1a1a2e;
+      transform: scale(0.97);
+    }
+
+    @media (max-width: 768px) {
+      .calc-container {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .wrapper,
+      .gpt-wrapper {
+        width: 90%;
+      }
+    }
+
+    .Aadved{
+        margin-bottom: 10px;
+    }
+
+    .Ai{
+       color: inherit;
+    }
+  </style>
 </head>
 <body>
-    <div class="wrapper">
-        <section class="screen">
-            0
-        </section>
 
-        <section class="calc-buttons">
-            <div class="calc-button-row">
-            <button class="calc-button double">
-                C
-            </button>
-            <button class="calc-button">
-                &larr;
-            </button>
-            <button class="calc-button">
-                &divide;
-            </button>
-            </div>
-
-            <div class="calc-button-row">
-            <button class="calc-button">
-                7
-            </button>
-            <button class="calc-button">
-                8
-            </button>
-            <button class="calc-button">
-                9
-            </button>
-            <button class="calc-button">
-                &times;
-            </button>
-            </div>
-
-                        <div class="calc-button-row">
-            <button class="calc-button">
-                4
-            </button>
-            <button class="calc-button">
-                5
-            </button>
-            <button class="calc-button">
-                6
-            </button>
-            <button class="calc-button">
-                &minus;
-            </button>
-            </div>
-
-                       <div class="calc-button-row">
-            <button class="calc-button">
-                1
-            </button>
-            <button class="calc-button">
-                2
-            </button>
-            <button class="calc-button">
-                3
-            </button>
-            <button class="calc-button">
-                &plus;
-            </button>
-            </div>
-
-                       <div class="calc-button-row">
-            <button class="calc-button triple">
-                0
-            </button>
-            <button class="calc-button">
-                &equals;
-            </button>
-            </div>
-
-        </section>
+  <div class="calc-container">
+    <!-- Aadved's Calculator -->
+    <div class="wrapper" id="aadved-calc">
+        
+  <div class="title-tag Aadved">Aadved's Calculator</div>
+      <div class="screen" id="user-screen">0</div>
+      <div class="calc-buttons">
+        <div class="calc-button-row">
+          <button class="calc-button double">C</button>
+          <button class="calc-button">←</button>
+          <button class="calc-button">÷</button>
+        </div>
+        <div class="calc-button-row">
+          <button class="calc-button">7</button>
+          <button class="calc-button">8</button>
+          <button class="calc-button">9</button>
+          <button class="calc-button">×</button>
+        </div>
+        <div class="calc-button-row">
+          <button class="calc-button">4</button>
+          <button class="calc-button">5</button>
+          <button class="calc-button">6</button>
+          <button class="calc-button">-</button>
+        </div>
+        <div class="calc-button-row">
+          <button class="calc-button">1</button>
+          <button class="calc-button">2</button>
+          <button class="calc-button">3</button>
+          <button class="calc-button">+</button>
+        </div>
+        <div class="calc-button-row">
+          <button class="calc-button triple">0</button>
+          <button class="calc-button">=</button>
+        </div>
+      </div>
     </div>
 
-    <script>
-        (() => {
-  let runningTotal = 0;
-  let buffer = "0";
-  let previousOperator = null;
+    <!-- ChatGPT's Calculator -->
+     
+    <div class="gpt-wrapper" id="gpt-calc">
+        
+  <div class="title-tag Ai">ChatGPT's Calculator</div>
+      <div class="screen" id="ai-screen">0</div>
+      <div class="calc-buttons">
+        <div class="calc-button-row">
+          <button class="calc-button double">AC</button>
+          <button class="calc-button">←</button>
+          <button class="calc-button">÷</button>
+        </div>
+        <div class="calc-button-row">
+          <button class="calc-button">7</button>
+          <button class="calc-button">8</button>
+          <button class="calc-button">9</button>
+          <button class="calc-button">×</button>
+        </div>
+        <div class="calc-button-row">
+          <button class="calc-button">4</button>
+          <button class="calc-button">5</button>
+          <button class="calc-button">6</button>
+          <button class="calc-button">-</button>
+        </div>
+        <div class="calc-button-row">
+          <button class="calc-button">1</button>
+          <button class="calc-button">2</button>
+          <button class="calc-button">3</button>
+          <button class="calc-button">+</button>
+        </div>
+        <div class="calc-button-row">
+          <button class="calc-button double">0</button>
+          <button class="calc-button">=</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
-  const screen = document.querySelector('.screen');
+  <script>
+    function initCalc(calcId, screenId) {
+      let runningTotal = 0;
+      let buffer = "0";
+      let previousOperator = null;
 
-  function buttonClick(value) {
-    if (isNaN(value)) {
-      handleSymbol(value);
-    } else {
-      handleNumber(value);
-    }
+      const screen = document.getElementById(screenId);
+      const calc = document.getElementById(calcId);
 
-    screen.innerText = buffer;
-  }
+      calc.addEventListener('click', function (event) {
+        const value = event.target.innerText;
+        if (!value.trim()) return;
+        buttonClick(value);
+      });
 
-  function handleSymbol(symbol) {
-    switch (symbol) {
-      case 'C':
-        buffer = '0';
-        runningTotal = 0;
-        previousOperator = null;
-        break;
-
-      case '=':
-        if (previousOperator === null) return;
-
-        flushOperation(parseInt(buffer));
-        buffer = runningTotal.toString();
-        runningTotal = 0;
-        previousOperator = null;
-        break;
-
-      case '←':
-        if (buffer.length === 1) {
-          buffer = '0';
+      function buttonClick(value) {
+        if (isNaN(value)) {
+          handleSymbol(value);
         } else {
-          buffer = buffer.slice(0, -1);
+          handleNumber(value);
         }
-        break;
+        if (buffer.length > 11) buffer = buffer.slice(0, 11);
+        screen.innerText = buffer;
+      }
 
-      case '+':
-      case '-':
-      case '×':
-      case '÷':
-        handleMath(symbol);
-        break;
-    }
-  }
-
-  function handleMath(symbol) {
-    const intBuffer = parseInt(buffer);
-
-    if (previousOperator !== null) {
-      flushOperation(intBuffer);
-    } else {
-      runningTotal = intBuffer;
-    }
-
-    previousOperator = symbol;
-    buffer = '0';
-  }
-
-  function flushOperation(intBuffer) {
-    switch (previousOperator) {
-      case '+':
-        runningTotal += intBuffer;
-        break;
-      case '-':
-        runningTotal -= intBuffer;
-        break;
-      case '×':
-        runningTotal *= intBuffer;
-        break;
-      case '÷':
-        if (intBuffer === 0) {
-          alert("Bruhh... Division by zero ain't allowed 🛑");
-          runningTotal = 0;
-        } else {
-          runningTotal = Math.floor(runningTotal / intBuffer);
-        }
-        break;
-    }
-  }
-
-  function handleNumber(numberString) {
-    if (numberString === '.') return; // Block decimals
-
-    if (buffer === "0") {
-      buffer = numberString;
-    } else {
-      buffer += numberString;
-    }
-  }
-
-  function init() {
-    // Mouse clicks
-    document.querySelector('.calc-buttons').addEventListener('click', function (event) {
-      const value = event.target.innerText;
-      if (!value.trim()) return;
-      buttonClick(value);
-    });
-
-    // Keyboard support
-    document.addEventListener('keydown', function (event) {
-      const key = event.key;
-
-      if (!isNaN(key)) {
-        buttonClick(key);
-      } else {
-        switch (key) {
-          case '+':
-            buttonClick('+');
+      function handleSymbol(symbol) {
+        switch (symbol) {
+          case 'C':
+          case 'AC':
+            buffer = '0';
+            runningTotal = 0;
+            previousOperator = null;
             break;
-          case '-':
-            buttonClick('-');
-            break;
-          case '*':
-            buttonClick('×');
-            break;
-          case '/':
-            buttonClick('÷');
-            break;
-          case 'Enter':
+
           case '=':
-            buttonClick('=');
+            if (previousOperator === null) return;
+            flushOperation(parseInt(buffer));
+            buffer = runningTotal.toString();
+            runningTotal = 0;
+            previousOperator = null;
             break;
-          case 'Backspace':
-            buttonClick('←');
+
+          case '←':
+            buffer = buffer.length === 1 ? '0' : buffer.slice(0, -1);
             break;
-          case 'Escape':
-            buttonClick('C');
+
+          case '+':
+          case '-':
+          case '×':
+          case '÷':
+            handleMath(symbol);
             break;
         }
       }
+
+      function handleMath(symbol) {
+        const intBuffer = parseInt(buffer);
+        if (previousOperator !== null) {
+          flushOperation(intBuffer);
+        } else {
+          runningTotal = intBuffer;
+        }
+        previousOperator = symbol;
+        buffer = '0';
+      }
+
+      function flushOperation(intBuffer) {
+        switch (previousOperator) {
+          case '+': runningTotal += intBuffer; break;
+          case '-': runningTotal -= intBuffer; break;
+          case '×': runningTotal *= intBuffer; break;
+          case '÷':
+            if (intBuffer === 0) {
+              alert("Bruhh... Division by zero ain't allowed 🛑");
+              runningTotal = 0;
+            } else {
+              runningTotal = Math.floor(runningTotal / intBuffer);
+            }
+            break;
+        }
+      }
+
+      function handleNumber(numberString) {
+        if (buffer === "0") {
+          buffer = numberString;
+        } else {
+          buffer += numberString;
+        }
+      }
+    }
+// Enable numpad/keyboard support for both calculators
+document.addEventListener("keydown", (event) => {
+  const key = event.key;
+
+  const calcIds = [
+    { id: 'aadved-calc', screen: 'user-screen' },
+    { id: 'gpt-calc', screen: 'ai-screen' }
+  ];
+
+  // Check if it's a valid key we care about
+  const validKeys = ['0','1','2','3','4','5','6','7','8','9','+','-','*','/','=','Enter','Backspace','Delete'];
+
+  if (!validKeys.includes(key)) return;
+
+  // Map keys to corresponding calculator symbols
+  const keyMap = {
+    '*': '×',
+    '/': '÷',
+    'Enter': '=',
+    '=': '=',
+    'Backspace': '←',
+    'Delete': 'AC'
+  };
+
+  const mappedKey = keyMap[key] || key;
+
+  // Simulate a button click on both calculators
+  calcIds.forEach(({ id }) => {
+    const buttons = document.querySelectorAll(`#${id} .calc-button`);
+    buttons.forEach(btn => {
+      if (btn.innerText === mappedKey) {
+        btn.click();
+      }
     });
-  }
+  });
+});
 
-  init();
-})();
-
-    </script>
+    initCalc('aadved-calc', 'user-screen');
+    initCalc('gpt-calc', 'ai-screen');
+  </script>
 </body>
 </html>
