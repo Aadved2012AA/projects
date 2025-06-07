@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Calculator | Aadved</title>
+    <style>
+        html{
+    box-sizing: border-box;
+    height: 100%;
+}
+
+*,
+*::after,
+*::before{
+    box-sizing: inherit;
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    align-items: center;
+    background: linear-gradient(320deg, #7E78D2,  #dbd4bb, #B4CEB3 );
+    display: flex;
+    font-family: Arial, Helvetica, sans-serif;
+    font-display: swap;
+    height: inherit;
+    justify-content: center;
+}
+
+.wrapper{
+    backdrop-filter: blur(5.5px);
+    -webkit-backdrop-filter:  blur(5.5px);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(35, 35, 35, 0.1);
+    color: #232323;
+     backdrop-filter: blur(4px);
+    -webkit-backdrop-filter:  blur(4px);
+    background: rgba(255, 255, 255, 0.30);
+    border: rgba(255, 255, 255, 0.34);
+    flex-basis: 400px;
+    height: 540px;
+    padding: 20px 35px;
+}
+
+.screen{
+    backdrop-filter: blur(5.5px);
+    backdrop-filter: blur(5.5px);
+    -webkit-backdrop-filter:  blur(5.5px);
+    background: rgba(255, 255, 255, 0.75);
+    border: rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(35, 35, 35, 0.01);
+    color: #232323;
+    font-size: 35px;
+    overflow: auto;
+    text-align: right;
+    width: 326px;
+    padding:20px;
+}
+
+
+.calc-button-row{
+    display: flex;
+    justify-content: space-between;
+    margin: 5% 0;
+}
+
+.calc-button{
+    backdrop-filter: blur(5.5px);
+    backdrop-filter: blur(5.5px);
+    -webkit-backdrop-filter:  blur(5.5px);
+    background: rgba(255, 255, 255, 0.75);
+    border: rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(35, 35, 35, 0.01);
+    color: #232323;
+    flex-basis: 20%;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 24px;
+    height: 65px;
+}
+
+.calc-button:last-child{
+    backdrop-filter: blur(5.5px);
+    backdrop-filter: blur(5.5px);
+    -webkit-backdrop-filter:  blur(5.5px);
+    background: rgba(255, 255, 255, 0.75);
+    border: rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(35, 35, 35, 0.01);
+    color: #fff;
+    background-color:   #4faccb;
+}
+
+.calc-button:last-child:hover{
+    background-color: inherit;
+    color: inherit;
+}
+
+.calc-button:hover{
+    background-color: inherit;
+}
+
+.calc-button:active{
+    background-color: #4faccb;
+    color: white;
+}
+
+.calc-button:last-child:active{
+    background-color: rgb(255, 248, 33);
+    color: black;
+}
+
+.double{
+    flex-basis: 47%;
+}
+
+.triple{
+flex-basis: 73%;
+}
+
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <section class="screen">
+            0
+        </section>
+
+        <section class="calc-buttons">
+            <div class="calc-button-row">
+            <button class="calc-button double">
+                C
+            </button>
+            <button class="calc-button">
+                &larr;
+            </button>
+            <button class="calc-button">
+                &divide;
+            </button>
+            </div>
+
+            <div class="calc-button-row">
+            <button class="calc-button">
+                7
+            </button>
+            <button class="calc-button">
+                8
+            </button>
+            <button class="calc-button">
+                9
+            </button>
+            <button class="calc-button">
+                &times;
+            </button>
+            </div>
+
+                        <div class="calc-button-row">
+            <button class="calc-button">
+                4
+            </button>
+            <button class="calc-button">
+                5
+            </button>
+            <button class="calc-button">
+                6
+            </button>
+            <button class="calc-button">
+                &minus;
+            </button>
+            </div>
+
+                       <div class="calc-button-row">
+            <button class="calc-button">
+                1
+            </button>
+            <button class="calc-button">
+                2
+            </button>
+            <button class="calc-button">
+                3
+            </button>
+            <button class="calc-button">
+                &plus;
+            </button>
+            </div>
+
+                       <div class="calc-button-row">
+            <button class="calc-button triple">
+                0
+            </button>
+            <button class="calc-button">
+                &equals;
+            </button>
+            </div>
+
+        </section>
+    </div>
+
+    <script>
+        (() => {
+  let runningTotal = 0;
+  let buffer = "0";
+  let previousOperator = null;
+
+  const screen = document.querySelector('.screen');
+
+  function buttonClick(value) {
+    if (isNaN(value)) {
+      handleSymbol(value);
+    } else {
+      handleNumber(value);
+    }
+
+    screen.innerText = buffer;
+  }
+
+  function handleSymbol(symbol) {
+    switch (symbol) {
+      case 'C':
+        buffer = '0';
+        runningTotal = 0;
+        previousOperator = null;
+        break;
+
+      case '=':
+        if (previousOperator === null) return;
+
+        flushOperation(parseInt(buffer));
+        buffer = runningTotal.toString();
+        runningTotal = 0;
+        previousOperator = null;
+        break;
+
+      case '←':
+        if (buffer.length === 1) {
+          buffer = '0';
+        } else {
+          buffer = buffer.slice(0, -1);
+        }
+        break;
+
+      case '+':
+      case '-':
+      case '×':
+      case '÷':
+        handleMath(symbol);
+        break;
+    }
+  }
+
+  function handleMath(symbol) {
+    const intBuffer = parseInt(buffer);
+
+    if (previousOperator !== null) {
+      flushOperation(intBuffer);
+    } else {
+      runningTotal = intBuffer;
+    }
+
+    previousOperator = symbol;
+    buffer = '0';
+  }
+
+  function flushOperation(intBuffer) {
+    switch (previousOperator) {
+      case '+':
+        runningTotal += intBuffer;
+        break;
+      case '-':
+        runningTotal -= intBuffer;
+        break;
+      case '×':
+        runningTotal *= intBuffer;
+        break;
+      case '÷':
+        if (intBuffer === 0) {
+          alert("Bruhh... Division by zero ain't allowed 🛑");
+          runningTotal = 0;
+        } else {
+          runningTotal = Math.floor(runningTotal / intBuffer);
+        }
+        break;
+    }
+  }
+
+  function handleNumber(numberString) {
+    if (numberString === '.') return; // Block decimals
+
+    if (buffer === "0") {
+      buffer = numberString;
+    } else {
+      buffer += numberString;
+    }
+  }
+
+  function init() {
+    // Mouse clicks
+    document.querySelector('.calc-buttons').addEventListener('click', function (event) {
+      const value = event.target.innerText;
+      if (!value.trim()) return;
+      buttonClick(value);
+    });
+
+    // Keyboard support
+    document.addEventListener('keydown', function (event) {
+      const key = event.key;
+
+      if (!isNaN(key)) {
+        buttonClick(key);
+      } else {
+        switch (key) {
+          case '+':
+            buttonClick('+');
+            break;
+          case '-':
+            buttonClick('-');
+            break;
+          case '*':
+            buttonClick('×');
+            break;
+          case '/':
+            buttonClick('÷');
+            break;
+          case 'Enter':
+          case '=':
+            buttonClick('=');
+            break;
+          case 'Backspace':
+            buttonClick('←');
+            break;
+          case 'Escape':
+            buttonClick('C');
+            break;
+        }
+      }
+    });
+  }
+
+  init();
+})();
+
+    </script>
+</body>
+</html>
